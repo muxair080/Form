@@ -74,30 +74,31 @@ async def AllUsersData(db : Session = Depends(get_db)):
     return usersdata
 
 
-file_path = ''
-@router.post('/userimage')
-async def UserImage(file : UploadFile = File(...), db : Session = Depends(get_db)):
+# file_path = ''
+# # 
+# @router.post('/userimage')
+# async def UserImage(file : UploadFile = File(...), db : Session = Depends(get_db)):
+
+#     with open(f'StaticFolder\{file.filename}','wb') as image:
+#         shutil.copyfileobj(file.file, image)
     
-    with open(f'StaticFolder\{file.filename}','wb') as image:
-        shutil.copyfileobj(file.file, image)
-    
-    # url =  'http://127.0.0.1:8000/getuserimage'
-    FileName = file.filename.split('.') 
-    Name = FileName[0]
-    Type = FileName[1]
-    print('filename : ', Name, " Type : ", Type) 
-    userimage = {'name' : Name , 'type' : Type}
-    Image = models.UserImage(**userimage)
-    db.add(Image)
-    db.commit()
-    db.refresh(Image)
+#     # url =  'http://127.0.0.1:8000/getuserimage'
+#     FileName = file.filename.split('.') 
+#     Name = FileName[0]
+#     Type = FileName[1]
+#     print('filename : ', Name, " Type : ", Type) 
+#     userimage = {'name' : Name , 'type' : Type}
+#     Image = models.UserImage(**userimage)
+#     db.add(Image)
+#     db.commit()
+#     db.refresh(Image)
 
-    return {"image" : Image}
+#     return {"image" : Image}
 
 
-@router.get('/getuserimage/{name}')
-async def GetUserImage(name : str):
-    path = os.path.join(file_path,f'StaticFolder/{name}.png')
-    if os.path.exists(path):
-        return FileResponse(path)
-    return {"Message" : "Path dose not exist"}
+# @router.get('/getuserimage/{name}')
+# async def GetUserImage(name : str):
+#     path = os.path.join(file_path,f'StaticFolder/{name}.png')
+#     if os.path.exists(path):
+#         return FileResponse(path)
+#     return {"Message" : "Path dose not exist"}
