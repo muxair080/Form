@@ -1,11 +1,13 @@
 from datetime import date, datetime
-from sqlite3 import Timestamp
 from sqlalchemy import Column, Integer, String, true,ForeignKey
 from database import Base
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 # from uuid import uuid4
 from sqlalchemy.orm import relationship
+
+
+
 class UserData(Base):
     __tablename__ = "userdata"
     Id = Column(Integer ,primary_key=True , index= True)
@@ -20,6 +22,11 @@ class UserData(Base):
     owner_id = Column(Integer, ForeignKey("user.Id", ondelete="CASCADE"), nullable=False)
     owner = relationship("User")
     
+class UserImage(Base):
+    __tablename__  ="userimage"
+    userid = Column(Integer, ForeignKey('userdata.Id', ondelete= "CASCADE"), nullable=False)
+    name = Column(String, primary_key=True)
+    type = Column(String, nullable=False)
 class User(Base):
     __tablename__ = "user"
     Id = Column(Integer,primary_key = True)

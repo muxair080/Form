@@ -1,13 +1,15 @@
 
 from datetime import datetime
 from distutils.command.config import config
-import email
 from typing import Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, HttpUrl
 
+# alembic==1.7.7
 
-
-
+class UserImage(BaseModel):
+    url : HttpUrl
+    name : str
+    type : str
 
 class UserData(BaseModel):
     First_Name : str
@@ -17,7 +19,7 @@ class UserData(BaseModel):
     Out_of_Matric_Marks  : int
     FSC_Marks : int
     Out_Of_FSC_Marks : int 
-
+    
 class UserDataIn(UserData):
    class Config:
         orm_mode = True
@@ -35,6 +37,7 @@ class UserDataOut(UserData):
     Id : int
     owner_id : int
     owner : UserOut
+    user_image : Optional[UserImage] = None
     class Config:
         orm_mode = True
 class CreateUser(User):
